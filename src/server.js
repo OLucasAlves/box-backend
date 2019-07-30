@@ -8,6 +8,7 @@ app.use(cors());
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
+
 io.on("connection",socket => {
     socket.on('connectRoom', box => {
         socket.join(box);
@@ -20,6 +21,8 @@ mongoose.connect('mongodb+srv://mongo:1234@cluster0-mb5il.mongodb.net/omninistac
 
 app.use((req,res,next) =>{
     req.io = io;
+
+    return next()
 });
 
 
@@ -29,4 +32,4 @@ app.use('/files',express.static(path.resolve(__dirname,'..','tmp')));
 
 app.use(require('./routes'));
 
-server.listen(process.env.PORT || 3333);
+server.listen(3333);
